@@ -8,7 +8,7 @@ export async function GET(request: Request, query: any) {
   const itemId = Number(id);
   const item = await prisma.item.findUnique({
     where: {
-      id: itemId,
+      id: id,
     },
   });
   return Response.json(item);
