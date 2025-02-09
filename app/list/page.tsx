@@ -20,7 +20,7 @@ export default function ListPage(req: any) {
       <h1 className="text-4xl font-extrabold dark:text-white">Shopping List</h1>
       <ul id="todo-list">
         {items.map((item: any) => {
-          const isChecked = !item.on_list;
+          const isChecked = !item.onList;
           return (
             <li
               className="border-b border-gray-200 flex items-center justify-between py-4"
