@@ -32,9 +32,9 @@ export default function ListPage(req: any) {
   const title = view == "SHOPPINGLIST" ? "Shopping List" : "Bought List";
   const actionButton =
     view == "SHOPPINGLIST" ? (
-      <CheckCircleIcon className="size-5 mr-2 text-green-500" />
+      <CheckCircleIcon className="size-5 mr-2 text-green-500 cursor-pointer" />
     ) : (
-      <ArrowUturnLeftIcon className="size-5 mr-2 text-black-500" />
+      <ArrowUturnLeftIcon className="size-5 mr-2 text-black-500 cursor-pointer" />
     );
 
   return (
@@ -50,11 +50,13 @@ export default function ListPage(req: any) {
             >
               <label className="flex items-center">
                 {actionButton}
-                <span>{item.name}</span>
+                <span className="text-lg text-gray-900 dark:text-white">
+                  {item.name}
+                </span>
               </label>
-              <div className="row-start-2 flex gap-6 flex-wrap items-center justify-center">
-                <PencilSquareIcon className="size-6 text-blue-500" />
-                <TrashIcon className="size-6 text-red-500" />
+              <div className="row-start-2 flex gap-2 flex-wrap items-center justify-center">
+                <PencilSquareIcon className="size-6 text-blue-500 cursor-pointer" />
+                <TrashIcon className="size-6 text-red-500 cursor-pointer" />
               </div>
             </li>
           );
