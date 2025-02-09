@@ -22,6 +22,8 @@ model Item {
   on_list            Boolean   @default(true)
   last_purchase_date DateTime? @db.Timestamp(0)
   History            History[]
+
+  @@index([userId])
 }
 
 model User {
@@ -37,4 +39,6 @@ model History {
   itemId String
   price  Float    @default(0)
   date   DateTime @default(now())
+
+  @@index([itemId])
 }
