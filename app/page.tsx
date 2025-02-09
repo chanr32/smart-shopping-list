@@ -6,7 +6,7 @@ import {
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div>
           <label
@@ -19,16 +19,22 @@ export default function Home() {
             type="text"
             id="item"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="eggs"
+            placeholder="eggs, toilet paper"
             required
           />
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <ListBulletIcon className="size-10 text-white-500" />
-        <PlusCircleIcon className="size-10 text-white-500" />
-        <ChartBarSquareIcon className="size-10 text-white-500" />
+        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+          <ListBulletIcon className="size-10 text-white-500" />
+        </a>
+        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+          <PlusCircleIcon className="size-10 text-white-500" />
+        </a>
+        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+          <ChartBarSquareIcon className="size-10 text-white-500" />
+        </a>
       </footer>
-    </div>
+    </>
   );
 }
