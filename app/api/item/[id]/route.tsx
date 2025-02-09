@@ -1,15 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 
-export async function GET(request: Request, query: any) {
-  const {
-    params: { id },
-  } = query;
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
+
   const prisma = new PrismaClient();
-  const itemId = Number(id);
-  const item = await prisma.item.findUnique({
+
+  const items = await prisma.item.findUnique({
     where: {
       id: id,
     },
   });
-  return Response.json(item);
+
+  return Response.json(items);
 }
