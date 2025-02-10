@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   TrashIcon,
   PencilSquareIcon,
   ArrowUturnLeftIcon,
   CheckCircleIcon,
+  ArrowsRightLeftIcon,
 } from "@heroicons/react/16/solid";
 
 export default function ListPage(req: any) {
@@ -15,18 +17,36 @@ export default function ListPage(req: any) {
   const [view, setView] = useState("SHOPPINGLIST");
 
   useEffect(() => {
-    fetch(`/api/user/${userId}/items/shopping-list`)
-      .then((res) => res.json())
-      .then((data) => {
-        setShoppingItems(data);
-      });
-
-    fetch(`/api/user/${userId}/items/bought-list`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBoughtItems(data);
-      });
+    fetchShoppingList();
+    fetchBoughtList();
   }, []);
+
+  const fetchShoppingList = async () => {
+    try {
+      const response = await axios.get(
+        `/api/user/${userId}/items/shopping-list`
+      );
+      setShoppingItems(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchBoughtList = async () => {
+    try {
+      const response = await axios.get(
+        `/api/user/${userId}/items/shopping-list`
+      );
+      setBoughtItems(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleViewChange = () => {
+    const newView = view == "SHOPPINGLIST" ? "BOUGHTLIST" : "SHOPPINGLIST";
+    setView(newView);
+  };
 
   const items = view == "SHOPPINGLIST" ? shoppingItems : boughtItems;
   const title = view == "SHOPPINGLIST" ? "Shopping List" : "Bought List";
@@ -39,7 +59,16 @@ export default function ListPage(req: any) {
 
   return (
     <div className="md:w-1/2 mx-auto">
-      <h1 className="text-4xl font-extrabold dark:text-white">{title}</h1>
+      <div className="flex gap-2 items-center">
+        <h1 className="text-4xl font-extrabold dark:text-white">{title}</h1>
+        <span>
+          <ArrowsRightLeftIcon
+            className="size-5 text-gray-500 cursor-pointer"
+            onClick={handleViewChange}
+          />
+        </span>
+      </div>
+
       <ul id="todo-list">
         {items.map((item: any) => {
           const isChecked = !item.onList;
