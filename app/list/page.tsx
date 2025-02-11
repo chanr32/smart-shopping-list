@@ -10,10 +10,19 @@ import {
   ArrowsRightLeftIcon,
 } from "@heroicons/react/16/solid";
 
+type Item = {
+  id: String;
+  userId: String;
+  name: String;
+  onList: Boolean;
+  isDeleted: Boolean;
+  lastPurchaseDate: Date;
+};
+
 export default function ListPage(req: any) {
   const userId = "1";
-  const [shoppingItems, setShoppingItems] = useState<object[]>([]);
-  const [boughtItems, setBoughtItems] = useState<object[]>([]);
+  const [shoppingItems, setShoppingItems] = useState<Item[]>([]);
+  const [boughtItems, setBoughtItems] = useState<Item[]>([]);
   const [view, setView] = useState("SHOPPINGLIST");
 
   useEffect(() => {
