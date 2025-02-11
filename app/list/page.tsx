@@ -12,8 +12,8 @@ import {
 
 export default function ListPage(req: any) {
   const userId = "1";
-  const [shoppingItems, setShoppingItems] = useState([]);
-  const [boughtItems, setBoughtItems] = useState([]);
+  const [shoppingItems, setShoppingItems] = useState<object[]>([]);
+  const [boughtItems, setBoughtItems] = useState<object[]>([]);
   const [view, setView] = useState("SHOPPINGLIST");
 
   useEffect(() => {
