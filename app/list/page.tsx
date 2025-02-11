@@ -55,7 +55,9 @@ export default function ListPage(req: any) {
 
   const fetchDeleteItem = async (itemId: string) => {
     try {
-      const response = await axios.delete(`/api/item/${itemId}`);
+      const response = await axios.post(`/api/item/${itemId}`, {
+        action: "SOFT_DELETE",
+      });
 
       return response.data;
     } catch (err) {

@@ -12,6 +12,7 @@ export async function GET(
     where: {
       userId: id,
       onList: true,
+      isDeleted: false,
     },
   });
 
