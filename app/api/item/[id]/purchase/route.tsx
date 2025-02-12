@@ -9,14 +9,22 @@ export async function POST(
 
   const prisma = new PrismaClient();
 
-  const items = await prisma.item.update({
+  const history = await prisma.history.create({
+    data: {
+      itemId: id,
+      brand: data.brand,
+      price: parseFloat(data.price),
+    },
+  });
+
+  const item = await prisma.item.update({
     where: {
       id: id,
     },
     data: {
-      onList: data.onList,
+      onList: false,
     },
   });
 
-  return Response.json(items);
+  return Response.json(item);
 }

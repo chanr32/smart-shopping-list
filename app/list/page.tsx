@@ -9,6 +9,7 @@ import {
   CheckCircleIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/16/solid";
+import AddHistoryModal from "../components/AddHistoryModal";
 
 type Item = {
   id: String;
@@ -23,7 +24,9 @@ export default function ListPage(req: any) {
   const userId = "1";
   const [shoppingItems, setShoppingItems] = useState<Item[]>([]);
   const [boughtItems, setBoughtItems] = useState<Item[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const [view, setView] = useState("SHOPPINGLIST");
+  const [selectedItem, setSelectedItem] = useState();
 
   useEffect(() => {
     fetchShoppingList();
@@ -50,10 +53,37 @@ export default function ListPage(req: any) {
     }
   };
 
-  const fetchUpdateItem = async (itemId: string, onList: boolean) => {
+  const fetchReturnShoppingList = async (itemId: string) => {
     try {
-      const response = await axios.post(`/api/item/${itemId}/switch-list`, {
-        onList: onList,
+      const response = await axios.post(
+        `/api/item/${itemId}/returnShoppingList`
+      );
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchMoveBoughtList = async (itemId: string) => {
+    try {
+      const response = await axios.post(`/api/item/${itemId}/moveBoughtList`);
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchPurchaseItem = async (
+    itemId: string,
+    brand: string,
+    price: float
+  ) => {
+    try {
+      const response = await axios.post(`/api/item/${itemId}/purchase`, {
+        brand,
+        price,
       });
 
       return response.data;
@@ -79,20 +109,37 @@ export default function ListPage(req: any) {
     setView(newView);
   };
 
-  const handleItemListChange = async (id: string, onList: boolean) => {
-    const item = await fetchUpdateItem(id, !onList);
+  const handleOpenCloseModal = (id: string) => {
+    setShowModal(!showModal);
+    setSelectedItem(id);
+  };
 
-    if (item.onList) {
-      setShoppingItems([...shoppingItems, item]);
-      setBoughtItems(
-        boughtItems.filter((boughtItem) => boughtItem.id !== item.id)
-      );
-    } else {
-      setBoughtItems([...boughtItems, item]);
-      setShoppingItems(
-        shoppingItems.filter((shopItem) => shopItem.id !== item.id)
-      );
-    }
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleReturnShoppingList = async (id: string) => {
+    const item = await fetchReturnShoppingList(id);
+
+    setShoppingItems([...shoppingItems, item]);
+    setBoughtItems(
+      boughtItems.filter((boughtItem) => boughtItem.id !== item.id)
+    );
+  };
+
+  const handlePurchaseItem = async (
+    id: string,
+    brand: string,
+    price: float
+  ) => {
+    const item = await fetchPurchaseItem(id, brand, price);
+
+    setBoughtItems([...boughtItems, item]);
+    setShoppingItems(
+      shoppingItems.filter((shoppingItem) => shoppingItem.id !== item.id)
+    );
+
+    handleCloseModal();
   };
 
   const handleDeleteItem = async (id: string) => {
@@ -114,6 +161,12 @@ export default function ListPage(req: any) {
 
   return (
     <>
+      <AddHistoryModal
+        isOpen={showModal}
+        selectedItem={selectedItem}
+        openCloseModal={handleOpenCloseModal}
+        purchaseItem={handlePurchaseItem}
+      />
       <div className={`md:w-1/2 mx-auto ${shopVisible}`}>
         <div className="flex gap-2 items-center">
           <h1 className="text-4xl font-extrabold dark:text-white">
@@ -135,9 +188,7 @@ export default function ListPage(req: any) {
                 key={item.id}
               >
                 <label className="flex items-center">
-                  <span
-                    onClick={() => handleItemListChange(item.id, item.onList)}
-                  >
+                  <span onClick={() => handleOpenCloseModal(item.id)}>
                     <CheckCircleIcon className="size-5 mr-2 text-green-500 cursor-pointer" />
                   </span>
                   <span className="text-lg text-gray-900 dark:text-white">
@@ -176,9 +227,7 @@ export default function ListPage(req: any) {
                 key={item.id}
               >
                 <label className="flex items-center">
-                  <span
-                    onClick={() => handleItemListChange(item.id, item.onList)}
-                  >
+                  <span onClick={() => handleReturnShoppingList(item.id)}>
                     <ArrowUturnLeftIcon className="size-5 mr-2 text-black-500 cursor-pointer" />
                   </span>
                   <span className="text-lg text-gray-900 dark:text-white">
