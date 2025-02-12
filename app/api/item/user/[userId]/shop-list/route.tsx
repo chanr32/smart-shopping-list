@@ -1,18 +1,15 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
-  const id = (await params).id;
-
   const prisma = new PrismaClient();
-
+  const userId = (await params).userId;
   const items = await prisma.item.findMany({
     where: {
-      userId: id,
+      userId: userId,
       onList: true,
-      isDeleted: false,
     },
   });
 
