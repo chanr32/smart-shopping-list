@@ -21,12 +21,12 @@ type Item = {
 };
 
 export default function ListPage(req: any) {
-  const userId = "1";
+  const userId = "4b04ffbf-8b09-4842-b08e-5ce83c1ac4bd";
   const [shoppingItems, setShoppingItems] = useState<Item[]>([]);
   const [boughtItems, setBoughtItems] = useState<Item[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [view, setView] = useState("SHOPPINGLIST");
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItem, setSelectedItem] = useState("");
 
   useEffect(() => {
     fetchShoppingList();
@@ -35,9 +35,7 @@ export default function ListPage(req: any) {
 
   const fetchShoppingList = async () => {
     try {
-      const response = await axios.get(
-        `/api/user/${userId}/items/shopping-list`
-      );
+      const response = await axios.get(`/api/item/user/${userId}/shop-list`);
       setShoppingItems(response.data);
     } catch (err) {
       console.log(err);
@@ -46,18 +44,18 @@ export default function ListPage(req: any) {
 
   const fetchBoughtList = async () => {
     try {
-      const response = await axios.get(`/api/user/${userId}/items/bought-list`);
+      const response = await axios.get(`/api/item/user/${userId}/bought-list`);
       setBoughtItems(response.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const fetchReturnShoppingList = async (itemId: string) => {
+  const returnToShopList = async (itemId: string) => {
     try {
-      const response = await axios.post(
-        `/api/item/${itemId}/returnShoppingList`
-      );
+      const response = await axios.put(`/api/item/${itemId}/`, {
+        onList: true,
+      });
 
       return response.data;
     } catch (err) {
@@ -65,9 +63,11 @@ export default function ListPage(req: any) {
     }
   };
 
-  const fetchMoveBoughtList = async (itemId: string) => {
+  const moveToBoughtList = async (itemId: string) => {
     try {
-      const response = await axios.post(`/api/item/${itemId}/moveBoughtList`);
+      const response = await axios.put(`/api/item/${itemId}/`, {
+        onList: false,
+      });
 
       return response.data;
     } catch (err) {
@@ -75,13 +75,15 @@ export default function ListPage(req: any) {
     }
   };
 
-  const fetchPurchaseItem = async (
+  const createHistory = async (
     itemId: string,
     brand: string,
-    price: float
+    price: number
   ) => {
     try {
-      const response = await axios.post(`/api/item/${itemId}/purchase`, {
+      const response = await axios.post(`/api/history`, {
+        userId,
+        itemId,
         brand,
         price,
       });
@@ -92,11 +94,9 @@ export default function ListPage(req: any) {
     }
   };
 
-  const fetchDeleteItem = async (itemId: string) => {
+  const deleteItem = async (itemId: string) => {
     try {
-      const response = await axios.post(`/api/item/${itemId}`, {
-        action: "SOFT_DELETE",
-      });
+      const response = await axios.delete(`/api/item/${itemId}`);
 
       return response.data;
     } catch (err) {
@@ -109,8 +109,8 @@ export default function ListPage(req: any) {
     setView(newView);
   };
 
-  const handleOpenCloseModal = (id: string) => {
-    setShowModal(!showModal);
+  const handleOpenModal = (id: string) => {
+    setShowModal(true);
     setSelectedItem(id);
   };
 
@@ -119,7 +119,7 @@ export default function ListPage(req: any) {
   };
 
   const handleReturnShoppingList = async (id: string) => {
-    const item = await fetchReturnShoppingList(id);
+    const item = await returnToShopList(id);
 
     setShoppingItems([...shoppingItems, item]);
     setBoughtItems(
@@ -128,11 +128,12 @@ export default function ListPage(req: any) {
   };
 
   const handlePurchaseItem = async (
-    id: string,
+    itemId: string,
     brand: string,
-    price: float
+    price: number
   ) => {
-    const item = await fetchPurchaseItem(id, brand, price);
+    const history = await createHistory(itemId, brand, price);
+    const item = await moveToBoughtList(itemId);
 
     setBoughtItems([...boughtItems, item]);
     setShoppingItems(
@@ -143,7 +144,7 @@ export default function ListPage(req: any) {
   };
 
   const handleDeleteItem = async (id: string) => {
-    const item = await fetchDeleteItem(id);
+    const item = await deleteItem(id);
 
     if (item.onList) {
       setShoppingItems(
@@ -164,7 +165,7 @@ export default function ListPage(req: any) {
       <AddHistoryModal
         isOpen={showModal}
         selectedItem={selectedItem}
-        openCloseModal={handleOpenCloseModal}
+        openCloseModal={handleCloseModal}
         purchaseItem={handlePurchaseItem}
       />
       <div className={`md:w-1/2 mx-auto ${shopVisible}`}>
@@ -188,7 +189,7 @@ export default function ListPage(req: any) {
                 key={item.id}
               >
                 <label className="flex items-center">
-                  <span onClick={() => handleOpenCloseModal(item.id)}>
+                  <span onClick={() => handleOpenModal(item.id)}>
                     <CheckCircleIcon className="size-5 mr-2 text-green-500 cursor-pointer" />
                   </span>
                   <span className="text-lg text-gray-900 dark:text-white">
