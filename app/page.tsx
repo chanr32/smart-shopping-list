@@ -1,20 +1,11 @@
-import {
-  PlusCircleIcon,
-  ListBulletIcon,
-  ChartBarSquareIcon,
-} from "@heroicons/react/16/solid";
-
 export default function Home() {
   return (
     <>
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div>
-          <label
-            htmlFor="item"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Add Item to List
-          </label>
+      <section className="flex flex-col-reverse justify-center sm:flex-row p-6 items-center gap-8 mb-12">
+        <div className="p-6 my-12">
+          <h2 className="text-4xl font-bold text-center sm:text-5xl mb-6 text-slate-900 dark:text-white">
+            Add new item
+          </h2>
           <input
             type="text"
             id="item"
@@ -23,18 +14,7 @@ export default function Home() {
             required
           />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
-          <ListBulletIcon className="size-10 text-white-500" />
-        </a>
-        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
-          <PlusCircleIcon className="size-10 text-white-500" />
-        </a>
-        <a className="flex items-center gap-2 hover:underline hover:underline-offset-4">
-          <ChartBarSquareIcon className="size-10 text-white-500" />
-        </a>
-      </footer>
+      </section>
     </>
   );
 }

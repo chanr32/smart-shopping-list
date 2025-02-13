@@ -2,6 +2,14 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import {
+  ArchiveBoxIcon,
+  UserCircleIcon,
+  PlusCircleIcon,
+  ListBulletIcon,
+  ChartBarSquareIcon,
+} from "@heroicons/react/16/solid";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,11 +33,44 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-slate-50 dark:bg-black dark:text-white`}
       >
-        <div className="grid justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-          {children}
-        </div>
+        <header className="bg-[#3C5EBE] text-white sticky top-0 z-10">
+          <section className="max-w-4xl mx-auto p-4 flex justify-between items-center">
+            <a href="/" className="flex">
+              <ArchiveBoxIcon className="size-8 mr-2" />
+              <h1 className="text-3xl font-medium">Restock</h1>
+            </a>
+            <div>
+              <button className="text-3xl sm:hidden focus:outline-none">
+                &#9776;
+              </button>
+              <nav
+                className="hidden sm:block space-x-8 text-xl"
+                aria-label="main"
+              >
+                <a className="hover:opacity-90" href="#">
+                  Home
+                </a>
+                <a className="hover:opacity-90" href="#">
+                  <UserCircleIcon className="size-6 inline-block" />
+                </a>
+              </nav>
+            </div>
+          </section>
+        </header>
+        <main className="max-w4xl max-auto">{children}</main>
+        <footer>
+          <section className="flex justify-center flex-row p-6 items-center gap-20 mb-12">
+            <a href="/list">
+              <ListBulletIcon className="size-10 text-white-500 cursor-pointer" />
+            </a>
+            <a href="/">
+              <PlusCircleIcon className="size-10 text-white-500 cursor-pointer" />
+            </a>
+            <ChartBarSquareIcon className="size-10 text-white-500 cursor-pointer" />
+          </section>
+        </footer>
       </body>
     </html>
   );
