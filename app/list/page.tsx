@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -21,17 +22,20 @@ type Item = {
 };
 
 export default function ListPage(req: any) {
-  const userId = "4b04ffbf-8b09-4842-b08e-5ce83c1ac4bd";
   const [shoppingItems, setShoppingItems] = useState<Item[]>([]);
   const [boughtItems, setBoughtItems] = useState<Item[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [view, setView] = useState("SHOPPINGLIST");
   const [selectedItem, setSelectedItem] = useState("");
 
+  const { userId, isLoaded, isSignedIn } = useAuth();
+
   useEffect(() => {
-    fetchShoppingList();
-    fetchBoughtList();
-  }, []);
+    if (isLoaded && userId) {
+      fetchShoppingList();
+      fetchBoughtList();
+    }
+  }, [isLoaded, userId]);
 
   const fetchShoppingList = async () => {
     try {
@@ -159,6 +163,14 @@ export default function ListPage(req: any) {
 
   const shopVisible = view === "SHOPPINGLIST" ? "visible" : "hidden";
   const boughtVisible = view === "BOUGHTLIST" ? "visible" : "hidden";
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return <div>Sign in to view this page</div>;
+  }
 
   return (
     <>

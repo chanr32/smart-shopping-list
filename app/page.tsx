@@ -1,11 +1,13 @@
 "use client";
 
+import { useAuth } from "@clerk/nextjs";
 import { useState } from "react";
 import axios from "axios";
 
 export default function Home() {
-  const userId = "4b04ffbf-8b09-4842-b08e-5ce83c1ac4bd";
   const [itemName, setItemName] = useState("");
+
+  const { userId, isLoaded, isSignedIn } = useAuth();
 
   const handleItemChange = (e) => {
     setItemName(e.target.value);
@@ -29,6 +31,14 @@ export default function Home() {
   const preventDefault = (e) => {
     e.preventDefault();
   };
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isSignedIn) {
+    return <div>Sign in to view this page</div>;
+  }
 
   return (
     <>
