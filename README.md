@@ -5,10 +5,10 @@ Smart Shopping List is an intuitive shopping assistant designed to make your gro
 Smart Shopping List also keeps a detailed history of your past purchases, including prices you paid, helping you track spending and make informed buying decisions. Whether you're planning your next shopping trip, tracking your pantry inventory, or monitoring price trends, Smart Shopping List has you covered.
 
 Key Features:
-✅ Add products to your shopping list with a single tap.
-✅ Track your pantry inventory — know what you have at home.
-✅ View a price history for each product you've bought.
-✅ Smart reminders for items running low.
-✅ Seamless, user-friendly interface.
+- ✅ Add products to your shopping list with a single tap.
+- ✅ Track your pantry inventory — know what you have at home.
+- ✅ View a price history for each product you've bought.
+- ✅ Smart reminders for items running low.
+- ✅ Seamless, user-friendly interface.
 
 Stay organized, save money, and shop smarter with Smart Shopping List.
