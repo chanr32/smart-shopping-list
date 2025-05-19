@@ -1,36 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Smart Shopping List: Your Ultimate Grocery Companion
 
-## Getting Started
+Smart Shopping List is an intuitive shopping assistant designed to make your grocery experience smarter and more efficient. Easily add products to your shopping list, but with a twist — each product is saved for future reference, allowing you to track your inventory and avoid buying duplicates. Not sure if you still have that bottle of olive oil at home? Simply check your list.
 
-First, run the development server:
+Smart Shopping List also keeps a detailed history of your past purchases, including prices you paid, helping you track spending and make informed buying decisions. Whether you're planning your next shopping trip, tracking your pantry inventory, or monitoring price trends, Smart Shopping List has you covered.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Key Features:
+✅ Add products to your shopping list with a single tap.
+✅ Track your pantry inventory — know what you have at home.
+✅ View a price history for each product you've bought.
+✅ Smart reminders for items running low.
+✅ Seamless, user-friendly interface.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Stay organized, save money, and shop smarter with Smart Shopping List.
